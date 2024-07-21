@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+function sshsp() {
+  local host=$(grep -E "^Host " ~/.ssh/config | sed -e 's/Host[ ]*//g' | fzf)
+  if [ -n "$host" ]; then
+    ssh $host
+  fi
+}
+
+function fsh() {
+  BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle reset-prompt
+}
+
+zle -N fsh
+bindkey '^r' fsh

@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+alias rubo='bundle exec rubocop'
+alias side='bundle exec sidekiq'
+alias roll='bundle exec rake db:rollback'
+alias mig='bundle exec rake db:migrate'
+alias migtest='bundle exec rake db:migrate RAILS_ENV=test'

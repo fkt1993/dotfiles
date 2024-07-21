@@ -1,0 +1,70 @@
+[include]
+	path = ~/.gitconfig.local
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+[alias]
+  aliases = !git config --get-regexp alias | sed 's/^alias\\.//' | sed 's/ / = /' | sort
+  amend = !git add -A && git commit -a --amend --no-edit
+  rebaseii = "!f() { git rebase -i HEAD~$1; }; f"
+  pf = push --force-with-lease
+  bc = !"git branch --merged origin/HEAD | grep -vE 'HEAD' | xargs git branch -d"
+  delete-merged-branch = "!f () { git checkout $1; git branch --merged|egrep -v '\\*|develop|main|staging|master'|xargs git branch -d; };f"
+  co = "!f() { args=$@; if [ -z \"$args\" ]; then branch=$(git branch --all | grep -v HEAD | fzf --preview 'echo {} | cut -c 3- | xargs git log --color=always' | cut -c 3-); git checkout $(echo $branch | sed 's#remotes/[^/]*/##'); else git checkout $args; fi }; f"
+  d = "!f() { args=$@; [ -z \"$args\" ] && args=HEAD; ([ \"$args\" = \"HEAD\" ] && git status --short || git diff --name-status $args | sed 's/\t/  /') | fzf --preview \"echo {} | cut -c 4- | xargs git diff --color=always $args --\" --multi --height 90% | cut -c 4-; }; f"
+  da = !git d | xargs git add --
+  dr = !git d | xargs git reset --
+  stl = !git stash list | fzf --preview 'echo {} | grep -o stash@{.*} | xargs git stash show -p --color=always' --height 90% | grep -o stash@{.*}
+  sta = !git stl | xargs git stash apply
+  std = !git stl | xargs git stash drop
+
+	age = __age
+	aliases = !git config --get-regexp ^alias | cut -c7- | sed -e 's/ / = /' | sort
+	current-branch = branch --show-current
+	default-branch = !git symbolic-ref refs/remotes/origin/HEAD | sed 's!.*/!!'
+	df = !git diff $(git default-branch)...$(git current-branch)
+	discard = restore
+	fix-latest-commit-date = __fix-latest-commit-date
+	fixup = !git remember | xargs --no-run-if-empty -I_ git commit --fixup _ && git rebase -i --autosquash
+	fz-branch = __fz-switch
+	fz-delete = __fz-delete
+	fz-merge = __fz-merge
+	fz-switch = __fz-switch
+	git = !git
+	gone = !git fetch --all --prune && git branch -vv | awk '/: gone]/{print $1}' | xargs --no-run-if-empty git branch -D
+	graph = log --graph --oneline
+	history = log --numstat --pretty=format:'%C(auto)%h %C(blue)%cs%C(auto)%d %s %C(blue)[%cn]'
+	home = !git switch $(git default-branch)
+	it = __it
+	inside = !git rev-parse &>/dev/null
+	latest-tag = describe --tags --abbrev=0
+	list-branch = __list-branch
+	party = shortlog -nse
+	remember = __remember
+	remote-url = !git remote get-url origin | sed -E 's!^git@(.+):!\\1/!' | sed -e 's/\\.git$//'
+	rename-branch = branch --move
+	rewind = !git remember | xargs --no-run-if-empty git reset --soft
+	root = !pwd
+	save = stash save
+	ss = status --short
+	staged = diff --staged --name-only --diff-filter=ACMR
+	store = __store
+	summary = __summary
+	sw = __sw
+	toggle-branch = switch -
+	twig = __twig
+	uncommit = reset --soft HEAD^
+	unpushed = !git log --oneline $(git remote)/$(git current-branch)..$(git current-branch)
+	unstage = restore --staged
+	untracked = ls-files --others --exclude-standard
+	upstream-branch = rev-parse --abbrev-ref --symbolic-full-name @{u}
+	whoami = !git config --get-regexp user | cut -c6- | sed -e 's/key .*/key ***/' | sed -e 's/ / = /' | awk '!A[$1]++' | column -t
+	zip = __zip
