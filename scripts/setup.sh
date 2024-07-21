@@ -1,5 +1,4 @@
 #!/bin/bash
 
-echo 'hoge!'
-
+./scripts/setup-brew.sh
 ./scripts/setup-links.sh

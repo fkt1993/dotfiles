@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -eu
 
 if [[ ! -d "$HOME/.ssh" ]]; then
   mkdir -p "$HOME/.ssh"
@@ -6,28 +6,22 @@ if [[ ! -d "$HOME/.ssh" ]]; then
 fi
 
 DOT_DIR="${HOME}/dotfiles"
-
-allowed_dirs_or_files=(".config" "Library" "zsh" ".zshrc")
+allowed_dirs=(
+  "${DOT_DIR}/.config"
+  "${DOT_DIR}/Library"
+  "${DOT_DIR}/zsh"
+  "${DOT_DIR}/.zshrc"
+)
 
 if cd "$DOT_DIR"; then
-  for f in $(find . -not -path '*.git*' -not -path '*.DS_Store' -type f -print | cut -b3-)
-  do
-    for dir in "${allowed_dirs_or_files[@]}"; do
-      echo $f
-      echo $dir
-      if [[ "$f" == $dir/* || "$f" == "$dir" ]]; then
-        mkdir -p "$HOME/$(dirname "$f")"
+  find "${allowed_dirs[@]}" -not -path '*.git*' -not -path '*.DS_Store' -type f -print | while read -r f; do
+    rel_path="${f#${DOT_DIR}/}"
+    target="$HOME/$rel_path"
 
-        if [ -L "$HOME/$f" ]; then
-          ln -sfv "$DOT_DIR/$f" "$HOME/$f"
-        else
-          ln -sniv "$DOT_DIR/$f" "$HOME/$f"
-        fi
+    mkdir -p "$(dirname "$target")"
 
-        break
-      fi
-    done
+    ln -sfv "$f" "$target"
   done
 else
-  echo "cannot cd to $DOT_DIR"
+  echo "Cannot access $DOT_DIR"
 fi
