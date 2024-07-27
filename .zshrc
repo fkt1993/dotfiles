@@ -6,7 +6,7 @@ export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
 PATH="${DOTFILES_HOME}/bin:${PATH}"
 
 # direnv
-eval "$(direnv hook zsh)"
+# eval "$(direnv hook zsh)"
 
 # alias
 # shellcheck source=.zshrc.alias
