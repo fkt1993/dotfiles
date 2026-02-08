@@ -1,7 +1,6 @@
 #!/bin/bash
 set -eu
 
-DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 source "$(dirname "$0")/lib-profile.sh"
 BREWFILE_COMMON="$DOTFILES_DIR/Brewfile"
 BREWFILE_PERSONAL="$DOTFILES_DIR/Brewfile.personal"

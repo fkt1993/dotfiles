@@ -2,15 +2,16 @@
 # Shared profile resolution for dotfiles scripts
 # Usage: source "$(dirname "$0")/lib-profile.sh"
 
-DOTFILES_PROFILE_FILE="$HOME/.dotfiles_profile"
+DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+DOTFILES_ENV="$DOTFILES_DIR/.env"
 
-# Resolve profile: saved file > fzf selection > fallback prompt
+# Resolve profile: .env file > fzf selection > fallback prompt
 # Returns the profile name (personal/work) or empty string
 resolve_profile() {
-  # 1. Check saved profile
-  if [ -f "$DOTFILES_PROFILE_FILE" ]; then
+  # 1. Check .env file
+  if [ -f "$DOTFILES_ENV" ]; then
     local saved
-    saved="$(cat "$DOTFILES_PROFILE_FILE")"
+    saved="$(grep '^DOTFILES_PROFILE=' "$DOTFILES_ENV" 2>/dev/null | cut -d= -f2)" || true
     if [ "$saved" = "personal" ] || [ "$saved" = "work" ]; then
       echo "$saved"
       return
@@ -34,10 +35,19 @@ resolve_profile() {
     esac
   fi
 
-  # 3. Save selection
+  # 3. Save selection to .env
   if [ "$profile" = "personal" ] || [ "$profile" = "work" ]; then
-    echo "$profile" > "$DOTFILES_PROFILE_FILE"
-    echo "Profile saved to $DOTFILES_PROFILE_FILE" >&2
+    if [ -f "$DOTFILES_ENV" ]; then
+      # Update existing DOTFILES_PROFILE or append
+      if grep -q '^DOTFILES_PROFILE=' "$DOTFILES_ENV" 2>/dev/null; then
+        sed -i '' "s/^DOTFILES_PROFILE=.*/DOTFILES_PROFILE=$profile/" "$DOTFILES_ENV"
+      else
+        echo "DOTFILES_PROFILE=$profile" >> "$DOTFILES_ENV"
+      fi
+    else
+      echo "DOTFILES_PROFILE=$profile" > "$DOTFILES_ENV"
+    fi
+    echo "Profile saved to $DOTFILES_ENV" >&2
     echo "$profile"
   fi
 }
