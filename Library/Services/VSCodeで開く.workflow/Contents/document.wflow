@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>AMApplicationBuild</key>
-	<string>512</string>
+	<string>526</string>
 	<key>AMApplicationVersion</key>
 	<string>2.10</string>
 	<key>AMDocumentVersion</key>
@@ -59,7 +59,10 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>open -a "Visual Studio Code" "$@"</string>
+					<string>for f in "$@"
+do
+    open -a 'Visual Studio Code' "$f"
+done</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
@@ -84,7 +87,7 @@
 				<key>Class Name</key>
 				<string>RunShellScriptAction</string>
 				<key>InputUUID</key>
-				<string>A98BE15C-67AC-4B64-9984-D326E8030E84</string>
+				<string>2335D1A5-F65A-442A-8D01-2424432CCD7D</string>
 				<key>Keywords</key>
 				<array>
 					<string>シェル</string>
@@ -94,9 +97,9 @@
 					<string>UNIX</string>
 				</array>
 				<key>OutputUUID</key>
-				<string>12706698-4986-4455-9D11-20A2B777CA21</string>
+				<string>FADAAF5B-E506-45D2-BF83-3508C45ADCDE</string>
 				<key>UUID</key>
-				<string>FB762A1C-680B-4026-B8E3-67C0B673959D</string>
+				<string>A7C35845-DE41-4C90-A937-C073E2FEDA9B</string>
 				<key>UnlocalizedApplications</key>
 				<array>
 					<string>Automator</string>
@@ -206,7 +209,7 @@
 		<key>presentationMode</key>
 		<integer>15</integer>
 		<key>processesInput</key>
-		<integer>0</integer>
+		<false/>
 		<key>serviceApplicationBundleID</key>
 		<string>com.apple.finder</string>
 		<key>serviceApplicationPath</key>
@@ -216,11 +219,11 @@
 		<key>serviceOutputTypeIdentifier</key>
 		<string>com.apple.Automator.nothing</string>
 		<key>serviceProcessesInput</key>
-		<integer>0</integer>
+		<false/>
 		<key>systemImageName</key>
 		<string>NSActionTemplate</string>
 		<key>useAutomaticInputType</key>
-		<integer>0</integer>
+		<false/>
 		<key>workflowTypeIdentifier</key>
 		<string>com.apple.Automator.servicesMenu</string>
 	</dict>

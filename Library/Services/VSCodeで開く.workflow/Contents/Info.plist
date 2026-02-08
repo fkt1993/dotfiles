@@ -12,7 +12,7 @@
 			<key>NSMenuItem</key>
 			<dict>
 				<key>default</key>
-				<string>Visual Studio Codeで開く</string>
+				<string>VSCodeで開く</string>
 			</dict>
 			<key>NSMessage</key>
 			<string>runWorkflowAsService</string>
