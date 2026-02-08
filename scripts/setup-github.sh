@@ -11,8 +11,12 @@ fi
 
 # GitHubにSSH鍵を登録
 echo "GitHub CLIでログインします..."
-gh auth login
+gh auth login -s admin:public_key
 gh ssh-key add "${SSH_KEY}.pub" --title "$(scutil --get ComputerName)"
+
+# admin:public_key スコープを除去
+echo "不要になった権限を除去します..."
+gh auth refresh -h github.com --reset-scopes
 
 # dotfilesのremoteをSSHに切り替え
 DOTFILES_DIR="$HOME/dotfiles"
