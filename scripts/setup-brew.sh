@@ -7,6 +7,7 @@ echo "Start setup ..."
 if [ $(uname) = Darwin ]; then
   if ! type brew &> /dev/null ; then
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+      eval "$(/opt/homebrew/bin/brew shellenv)"
   else
       echo "Since Homebrew is already installed, skip this phase and proceed."
   fi
