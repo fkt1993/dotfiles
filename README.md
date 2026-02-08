@@ -22,7 +22,7 @@ macOS 向けの個人用 dotfiles リポジトリ。シェル設定、Git 設定
 新しい Mac でターミナルを開いて以下を実行するだけでセットアップが完了します。Xcode Command Line Tools のインストールが求められた場合は、完了後に再実行してください。SSH 鍵の生成と GitHub への登録も自動で行われ、dotfiles リポジトリの remote が SSH に切り替わります。
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/fkt1993/dotfiles/main/bootstrap.sh | bash
+bash <(curl -fsSL https://raw.githubusercontent.com/fkt1993/dotfiles/main/bootstrap.sh)
 ```
 
 ### 手動インストール
