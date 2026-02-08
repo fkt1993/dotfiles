@@ -37,24 +37,13 @@ cd ~/dotfiles
 
 ### 1. Homebrew パッケージのインストール (`setup-brew.sh`)
 
-Homebrew が未インストールの場合は自動でインストールされます。その後、`Brewfile` の共通パッケージを導入し、プロファイル選択を求められます。
-
-```
-Select profile:
-  1) personal
-  2) work
-  3) skip (common packages only)
-```
+Homebrew が未インストールの場合は自動でインストールされます。その後、`Brewfile` の共通パッケージを導入し、fzf によるプロファイル選択を求められます（fzf 未導入時は番号入力にフォールバック）。
 
 - **personal** — `Brewfile.personal` を追加導入 (開発ツール、エディタ、個人用アプリケーション等)
 - **work** — `Brewfile.work` を追加導入 (業務用パッケージ)
 - **skip** — 共通パッケージのみ
 
-環境変数 `DOTFILES_PROFILE` を事前にセットすることで対話なしで選択できます。
-
-```bash
-DOTFILES_PROFILE=personal ./scripts/setup-brew.sh
-```
+選択結果は `.env` ファイル (`DOTFILES_PROFILE=personal`) に保存され、次回以降は自動で使われます。
 
 ### 2. シンボリックリンクの作成 (`setup-links.sh`)
 
@@ -94,9 +83,32 @@ DOTFILES_PROFILE=personal ./scripts/setup-brew.sh
 ./scripts/setup-mac.sh     # macOS 設定のみ
 ```
 
+## Brewfile 管理 (`brew-manage.sh`)
+
+インストール済みパッケージを Brewfile で管理するためのユーティリティスクリプトです。
+
+```bash
+# 各 Brewfile のパッケージ数と未登録パッケージを確認
+./scripts/brew-manage.sh status
+
+# インストール済みパッケージをプロファイル別 Brewfile に書き出し（未登録分のみ追記）
+./scripts/brew-manage.sh dump              # .env のプロファイルを使用
+./scripts/brew-manage.sh dump personal     # プロファイルを明示的に指定
+
+# personal と work の両方にあるパッケージを Brewfile（共通）に移動
+./scripts/brew-manage.sh sync
+```
+
+### 想定ワークフロー
+
+1. 個人マシンで `brew-manage.sh dump personal` → `Brewfile.personal` にパッケージを書き出し
+2. 仕事マシンで `brew-manage.sh dump work` → `Brewfile.work` にパッケージを書き出し
+3. `brew-manage.sh sync` → 両方に存在するパッケージが `Brewfile`（共通）に移動
+
 ## マシン固有の設定
 
 以下のファイルでマシンごとの差分を管理できます。いずれもリポジトリには含まれません。
 
+- **`.env`** — プロファイル設定 (`DOTFILES_PROFILE=personal|work`)
 - **`~/.zshrc.local`** — `.zshrc` の末尾で読み込まれるローカル設定
 - **`~/.gitconfig.local`** — Git のユーザー名・メールアドレス等のローカル設定
