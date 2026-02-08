@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 
+# curl | bash で実行された場合、stdinをターミナルに復元（Homebrewのsudoプロンプトに必要）
+if [ ! -t 0 ]; then
+  exec < /dev/tty
+fi
+
 # Xcode Command Line Toolsのインストール(gitに必要)
 if ! xcode-select -p &>/dev/null; then
   xcode-select --install
