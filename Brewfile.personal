@@ -1,0 +1,35 @@
+# Personal packages
+brew "exiftool"
+brew "fzf"
+brew "gh"
+brew "jpegoptim"
+brew "mas"
+brew "mozjpeg"
+brew "nodenv"
+brew "rbenv"
+brew "zsh-autosuggestions"
+cask "alfred"
+cask "appcleaner"
+cask "bluestacks"
+cask "chatgpt"
+cask "discord"
+cask "docker-desktop"
+cask "figma"
+cask "google-chrome"
+cask "google-japanese-ime"
+cask "iterm2"
+cask "karabiner-elements"
+cask "obsidian"
+cask "postico"
+cask "raycast"
+cask "slack"
+cask "spectacle"
+cask "visual-studio-code"
+cask "xcodes-app"
+mas "GarageBand", id: 682658836
+mas "Keynote", id: 409183694
+mas "LINE", id: 539883307
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "iMovie", id: 408981434
+tap "homebrew/bundle"
