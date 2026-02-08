@@ -5,6 +5,8 @@ export DOTFILES_ZSH_HOME=${DOTFILES_HOME}/zsh
 
 PATH="${DOTFILES_HOME}/bin:${PATH}"
 
+eval "$(nodenv init -)"
+
 # direnv
 # eval "$(direnv hook zsh)"
 
