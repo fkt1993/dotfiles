@@ -2,6 +2,7 @@
 set -eu
 
 DOTFILES_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+source "$(dirname "$0")/lib-profile.sh"
 BREWFILE_COMMON="$DOTFILES_DIR/Brewfile"
 BREWFILE_PERSONAL="$DOTFILES_DIR/Brewfile.personal"
 BREWFILE_WORK="$DOTFILES_DIR/Brewfile.work"
@@ -32,15 +33,18 @@ installed_packages() {
 cmd_dump() {
   local profile="${1:-}"
   if [ -z "$profile" ]; then
-    echo "Usage: brew-manage.sh dump <personal|work>"
+    profile="$(resolve_profile)"
+  fi
+  if [ -z "$profile" ]; then
+    echo "No profile selected."
     exit 1
   fi
-
-  local target="$DOTFILES_DIR/Brewfile.$profile"
   if [ "$profile" != "personal" ] && [ "$profile" != "work" ]; then
     echo "Error: profile must be 'personal' or 'work'"
     exit 1
   fi
+
+  local target="$DOTFILES_DIR/Brewfile.$profile"
 
   echo "Scanning installed packages..."
   local installed
