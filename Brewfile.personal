@@ -1,7 +1,6 @@
 # Personal packages
 brew "exiftool"
 brew "fzf"
-brew "gh"
 brew "jpegoptim"
 brew "mas"
 brew "mozjpeg"

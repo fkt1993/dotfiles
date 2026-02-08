@@ -17,17 +17,19 @@ macOS 向けの個人用 dotfiles リポジトリ。シェル設定、Git 設定
 
 ## セットアップ
 
-### 前提条件
+### ワンライナーインストール
 
-- macOS
-- Command Line Tools (`xcode-select --install`)
-
-### フルインストール
+新しい Mac でターミナルを開いて以下を実行するだけでセットアップが完了します。Xcode Command Line Tools のインストールが求められた場合は、完了後に再実行してください。SSH 鍵の生成と GitHub への登録も自動で行われ、dotfiles リポジトリの remote が SSH に切り替わります。
 
 ```bash
-git clone https://github.com/<user>/dotfiles.git ~/dotfiles
+curl -fsSL https://raw.githubusercontent.com/fkt1993/dotfiles/main/bootstrap.sh | bash
+```
+
+### 手動インストール
+
+```bash
+git clone https://github.com/fkt1993/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-chmod +x install.sh
 ./install.sh
 ```
 
