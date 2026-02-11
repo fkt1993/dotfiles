@@ -14,7 +14,18 @@ allowed_dirs=(
 )
 
 if cd "$DOT_DIR"; then
-  find "${allowed_dirs[@]}" -not -path '*.git*' -not -path '*.DS_Store' -type f -print | while read -r f; do
+  # .workflow バンドルはディレクトリごとシンボリックリンク（個別ファイルだとAutomatorが読めない）
+  find "${allowed_dirs[@]}" -name '*.workflow' -type d -print | while read -r f; do
+    rel_path="${f#${DOT_DIR}/}"
+    target="$HOME/$rel_path"
+
+    mkdir -p "$(dirname "$target")"
+
+    ln -sfv "$f" "$target"
+  done
+
+  # 通常ファイルは個別にシンボリックリンク（.workflow内は除外）
+  find "${allowed_dirs[@]}" -not -path '*.git*' -not -path '*.DS_Store' -not -path '*.workflow/*' -type f -print | while read -r f; do
     rel_path="${f#${DOT_DIR}/}"
     target="$HOME/$rel_path"
 
