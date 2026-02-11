@@ -1,4 +1,5 @@
 brew "gh"
 brew "peco"
+brew "smudge/smudge/nightlight"
 cask "sequel-ace"
 cask "xcodes"

@@ -40,6 +40,13 @@ defaults write -g NSAutomaticSpellingCorrectionEnabled -bool false
 # ライブ変換をオフ
 defaults write -g JIMPrefLiveConversionKey -bool false
 
+## Night Shift
+# 5:00〜4:59 のカスタムスケジュールで常時有効化
+nightlight schedule 5:00 4:59
+# 色温度を最大暖色に設定
+nightlight temp 100
+# 「明日まで有効にする」をオンにする
+nightlight on
+
 # 手動で設定
-# - NightShiftの設定
 # - Finderのサイドバー
