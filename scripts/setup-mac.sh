@@ -48,5 +48,17 @@ nightlight temp 100
 # 「明日まで有効にする」をオンにする
 nightlight on
 
+# ダークモードを有効にする
+defaults write -g AppleInterfaceStyle -string "Dark"
+
+# 「前の入力ソースを選択」(Control+Space) を無効化（Raycast等で使えるようにする）
+defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 60 "<dict><key>enabled</key><false/><key>value</key><dict><key>parameters</key><array><integer>32</integer><integer>49</integer><integer>262144</integer></array><key>type</key><string>standard</string></dict></dict>"
+
+# 設定を反映するためにプロセスを再起動（Dock, Finder, メニューバーのみ即時反映）
+# キーボード・入力ソース・マウス等のグローバル設定は再ログインまたは再起動が必要
+killall Dock
+killall Finder
+killall SystemUIServer
+
 # 手動で設定
 # - Finderのサイドバー
